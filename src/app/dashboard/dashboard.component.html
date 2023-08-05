@@ -1,0 +1,38 @@
+<section class="vh-100">
+  <div class="container card py-5 mt-2 mb-2 h-100">
+
+    <div class="row d-flex justify-content-center align-items-center">
+      <div class="col-md-8 col-lg-6 col-xl-4">
+
+        <h3 class="mb-4 pb-2 fw-bold text-center text-black-50">Check the weather forecast</h3>
+
+        <form [formGroup]="searchForm" (ngSubmit)="search(searchForm.value)">
+        <div class="input-group rounded mb-3">
+            <input type="search" class="form-control rounded" placeholder="Please Enter a City" aria-label="Search"
+              aria-describedby="search-addon" formControlName="search"/>
+
+              <button type="submit" class="btn btn-primary" [disabled]="!searchForm.valid"> Check!</button>
+            </div>
+          </form>
+        <div class="card shadow-0 border">
+          <div class="card-body p-4" *ngIf="currentWeather$ | async as weather">
+            <ng-container *ngIf="weather?.status != '404'">
+              <h4 class="mb-1 sfw-normal">{{weather?.city}}, {{weather?.country}}</h4>
+              <p class="mb-2">Current temperature: <strong>{{weather?.temperature}}°C</strong></p>
+              <p>Humidity: <strong>{{weather?.humidity}}</strong></p>
+
+              <div class="d-flex flex-row align-items-center">
+                <p class="mb-0 me-4">{{weather?.weatherMain}} ( {{weather?.weatherDescription}} )</p>
+              </div>
+            </ng-container>
+
+              <div *ngIf="weather?.status == '404'">{{weather.message}}</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
